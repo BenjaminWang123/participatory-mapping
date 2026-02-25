@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>A Minimum Viable Participatory Mapping Project</title>
+    <title>UW Quiet Study Spots Map</title>
     <script src="https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.js"></script>
     <link href="https://unpkg.com/maplibre-gl@3.1.0/dist/maplibre-gl.css" rel="stylesheet" />
     <!-- Styles for the map and popup -->
@@ -34,6 +34,11 @@
             line-height: 1.5;
             color: #000000;
             z-index: 1;
+        }
+
+        #info {
+            background-color: rgba(255,255,255,0.95);
+            border-left: 5px solid #4B2E83; /* UW purple */
         }
 
         #popup {
@@ -70,19 +75,20 @@
 
     <!-- Information box -->
     <div id="info">
-        <h3>Lab5 Participatory Mapping Project</h3>
+        <h3>UW Quiet Study Spots Map</h3>
         <h4>Benni Wang | University of Washington </h4>
         <!-- Introduction to the participatory mapping solution -->
-        <p>
-            This map is a minimum viable solution to participatory mapping.
-            Users can contribute their local knowledge by clicking on the map,
-            submitting their information, and viewing it represented as a red dot.
-            Existing contributions can also be viewed as red dots. While this map only offers
-            basic functionality, it can be expanded or repurposed to build your own participatory mapping projects. To help you envision what this map can assist you, you can take a look at a few existing projects, such as <a href="https://hgis.uw.edu/lgbtqspaces/" target="_blank"><b>Shifting LGBTQ+ spaces</b></a>,
-            <a href="https://hgis.uw.edu/chop"> <b>Archiving the CHOP</b></a> and <a href="https://www.queeringthemap.com/" target="_blank"><b>Queering the Map</b></a>.
-            An instruction can be found
-            <a href="https://www.github.com/jakobzhao/participatory-mapping" target="_blank">here</a>.
-            <i>Last update: June 23, 2023</i>
+       <p>
+            This map is designed for the University of Washington community to share and discover quiet study spots on or near campus.
+            Whether you're studying for midterms in Odegaard, working on a group project in Allen Library, or looking for a peaceful corner in Suzzallo,
+            you can click anywhere on the map to contribute your favorite study location.
+
+            Please include the name of the study spot, the noise level, and any helpful notes such as outlet availability, Wi-Fi quality, or best time of day.
+            Your email is optional and will not be displayed publicly.
+
+            This project aims to build a crowdsourced resource for UW students to support academic success and well-being.
+            <br><br>
+            <i>Last update: Feb 19 2026</i>
         </p>
     </div>
 
@@ -101,7 +107,7 @@
         // Create a new map instance
         let map = new maplibregl.Map({
             container: 'map', // container id
-            style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=Cusoe5zmfmn26glFoeoe', // style URL
+            style: 'https://api.maptiler.com/maps/winter-v4/style.json?key=RfRL9v7ZGFEpggF4P3Fp', // style URL
             center: [-122.3321, 47.6062], // starting position [lng, lat]
             // pitch: 45, // pitch in degrees
             zoom: 12 // starting zoom
