@@ -21,20 +21,41 @@ exports.getRecord = async(req, res) => {//
 //  * @param {form} req - form body that contains user selected information
 //  * @param {status} res - confirmation that comment has been added into the review table
 //  */
-exports.addRecord = async(req, res) => {
-    let {contributor, content, lat, lng} = req.body;
-    // let currTime = new Date().toISOString();
-    console.log('INSERT INTO "tblRecord"(contributor, content, lat, lng) VALUES ($1, $2, $3, $4)',
-        [contributor, content, lat, lng]);
-    let {recordRows} = await db.query(
-        'INSERT INTO "tblRecord"(contributor, content, lat, lng) VALUES ($1, $2, $3, $4)',
-        [contributor, content, lat, lng]
-    )
+// exports.addRecord = async(req, res) => {
+//     let {contributor, email, content, lat, lng} = req.body;
+//     // let currTime = new Date().toISOString();
+//     console.log('INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
+//         [contributor, email, content, lat, lng]);
+//     let {recordRows} = await db.query(
+//         'INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
+//         [contributor, content, lat, lng]
+//     )
 
-    res.status(200).send({
-        message: "record added into record table!",
-        body: {
-            record: {contributor, content, lat, lng}
-        }
-    })
+//     res.status(200).send({
+//         message: "record added into record table!",
+//         body: {
+//             record: {contributor, content, lat, lng}
+//         }
+//     })
+// };
+
+exports.addRecord = async (req, res) => {
+  let { contributor, email, content, lat, lng } = req.body;
+
+  console.log(
+    'INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
+    [contributor, email, content, lat, lng]
+  );
+
+  await db.query(
+    'INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
+    [contributor, email, content, lat, lng]
+  );
+
+  res.status(200).send({
+    message: "record added into record table!",
+    body: {
+      record: { contributor, email, content, lat, lng }
+    }
+  });
 };
