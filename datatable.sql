@@ -19,3 +19,6 @@ CREATE TABLE IF NOT EXISTS public."tblRecord"
 -- - lat: double precision column to store the latitude.
 -- - lng: double precision column to store the longitude.
 -- - created_at: TIMESTAMPTZ column with a default value of the current timestamp when a record is inserted.
+
+ALTER TABLE "tblRecord"
+ADD COLUMN email text;
