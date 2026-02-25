@@ -19,7 +19,7 @@
             bottom: 0;
             width: 100%;
         }
-        
+
         #info {
             position: absolute;
             top: 0;
@@ -35,7 +35,7 @@
             color: #000000;
             z-index: 1;
         }
-        
+
         #popup {
             padding: 10px;
         }
@@ -61,11 +61,11 @@
 <body>
     <!-- Map container -->
     <div id="map"></div>
-    
+
     <!-- Information box -->
     <div id="info">
-        <h3>A Minimum Viable Participatory Mapping Project</h3>
-        <h4>Bo Zhao | University of Washington </h4>
+        <h3>Lab5 Participatory Mapping Project</h3>
+        <h4>Benni Wang | University of Washington </h4>
         <!-- Introduction to the participatory mapping solution -->
         <p>
             This map is a minimum viable solution to participatory mapping.
@@ -74,23 +74,24 @@
             Existing contributions can also be viewed as red dots. While this map only offers
             basic functionality, it can be expanded or repurposed to build your own participatory mapping projects. To help you envision what this map can assist you, you can take a look at a few existing projects, such as <a href="https://hgis.uw.edu/lgbtqspaces/" target="_blank"><b>Shifting LGBTQ+ spaces</b></a>,
             <a href="https://hgis.uw.edu/chop"> <b>Archiving the CHOP</b></a> and <a href="https://www.queeringthemap.com/" target="_blank"><b>Queering the Map</b></a>.
-            An instruction can be found 
+            An instruction can be found
             <a href="https://www.github.com/jakobzhao/participatory-mapping" target="_blank">here</a>.
             <i>Last update: June 23, 2023</i>
-        </p> 
+        </p>
     </div>
-    
+
     <!-- JavaScript code for the interactive map and data submission -->
     <script>
+        const API_BASE = "https://lab5-3484e28b9e28.herokuapp.com";
         // Variable to hold the popup instance
         let popup = null;
-        
+
         // GeoJSON data object to store the contributed points
         let geojson = {
             'type': 'FeatureCollection',
             'features': []
         };
-        
+
         // Create a new map instance
         let map = new maplibregl.Map({
             container: 'map', // container id
@@ -102,12 +103,12 @@
 
         // Fetch existing records when the window is loaded
         window.addEventListener("load", async function () {
-            let response = await fetch('https://pmap-28a9a9408e2b.herokuapp.com/api/get-record', {
+            let response = await fetch(API_BASE + '/api/get-record', {
                 method: 'GET'
             });
 
             let data = await response.json();
-      
+
             // Iterate through the fetched records and add them to the GeoJSON data object
             for (let i = 0; i < data.rows.length; i++) {
                 geojson.features.push({
@@ -203,7 +204,7 @@
 
             try {
                 // Send the POST request to add the new record
-                await fetch('https://pmap-28a9a9408e2b.herokuapp.com/api/add-record', settings);
+                await fetch(API_BASE + '/api/add-record', settings);
             } catch (err) {
                 // Handle any errors that occur during the request
                 console.error(err);
