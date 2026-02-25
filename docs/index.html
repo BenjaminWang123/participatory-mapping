@@ -41,6 +41,8 @@
             border-left: 5px solid #4B2E83; /* UW purple */
         }
 
+        #spot, #noise { width: 100%; height: 28px; margin-bottom: 10px; }
+
         #popup {
             padding: 10px;
         }
@@ -129,6 +131,8 @@
                         'contributor': data.rows[i].contributor,
                         'email': data.rows[i].email,   // Added email to properties for potential future use
                         'content': data.rows[i].content,
+                        spot: data.rows[i].spot,
+                        noise: data.rows[i].noise,
                     },
                     'geometry': {
                         'type': 'Point',
@@ -154,9 +158,20 @@
                 'id': 'placesLayer',
                 'type': 'circle',
                 'source': 'places',
-                'paint': {
-                    'circle-radius': 6,
-                    'circle-color': '#B42222'
+                paint: {
+                    'circle-radius': ['case',
+                        ['==', ['get', 'noise'], 'quiet'], 6,
+                        ['==', ['get', 'noise'], 'medium'], 8,
+                        10
+                    ],
+                    'circle-color': ['case',
+                        ['==', ['get', 'noise'], 'quiet'], '#2ecc71',
+                        ['==', ['get', 'noise'], 'medium'], '#f1c40f',
+                        '#e74c3c'
+                    ],
+                    'circle-stroke-color': '#ffffff',
+                    'circle-stroke-width': 1,
+                    'circle-opacity': 0.85
                 }
             });
         });
@@ -192,10 +207,17 @@
             // Create the HTML content for the contribution popup
             const popupContent = `
             <div id="popup">
-                <input type="text" id="name" placeholder="Input your name here...">
-                <input type="email" id="email" placeholder="Input your email here...">
-                <input type="text" id="content" placeholder="Input your message here...">
-                <button id="submit">submit</button></div>`;
+                <input type="text" id="spot" placeholder="Study spot name (e.g., Suzzallo 3rd floor)">
+                <select id="noise">
+                    <option value="quiet">Noise level: quiet</option>
+                    <option value="medium">Noise level: medium</option>
+                    <option value="loud">Noise level: loud</option>
+                </select>
+                <input type="text" id="name" placeholder="Your name (optional)">
+                <input type="email" id="email" placeholder="Email (optional, not shown publicly)">
+                <input type="text" id="content" placeholder="Notes (outlets, Wi-Fi, best time...)">
+                <button id="submit">submit</button>
+            </div>`;
 
             // Create a new popup and set its content
             popup = new maplibregl.Popup({ closeOnClick: false })
@@ -213,6 +235,8 @@
             let contributor = document.getElementById('name').value;
             let email = document.getElementById('email').value;
             let content = document.getElementById('content').value;
+            let spot = document.getElementById('spot').value;
+            let noise = document.getElementById('noise').value;
             let lngLat = popup.getLngLat();
 
             // Create a new URLSearchParams object and append the data to it
@@ -221,6 +245,8 @@
             newRecord.append('email', email);
             newRecord.append('content', content);
             newRecord.append('lng', lngLat.lng);
+            newRecord.append('spot', spot);
+            newRecord.append('noise', noise);
             newRecord.append('lat', lngLat.lat);
 
             // Set the POST request settings
@@ -244,6 +270,8 @@
                         'contributor': contributor,
                         'email': email,   // Added email to properties for potential future use
                         'content': content,
+                        'spot': spot,
+                        'noise': noise,
                     },
                     'geometry': {
                         'type': 'Point',

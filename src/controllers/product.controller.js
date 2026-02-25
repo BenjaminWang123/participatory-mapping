@@ -40,16 +40,16 @@ exports.getRecord = async(req, res) => {//
 // };
 
 exports.addRecord = async (req, res) => {
-  let { contributor, email, content, lat, lng } = req.body;
+    let { contributor, email, spot, noise, content, lat, lng } = req.body;
 
   console.log(
-    'INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
-    [contributor, email, content, lat, lng]
+    'INSERT INTO "tblRecord"(contributor, email, spot, noise, content, lat, lng) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    [contributor, email, spot, noise, content, lat, lng]
   );
 
   await db.query(
-    'INSERT INTO "tblRecord"(contributor, email, content, lat, lng) VALUES ($1, $2, $3, $4, $5)',
-    [contributor, email, content, lat, lng]
+    'INSERT INTO "tblRecord"(contributor, email, spot, noise, content, lat, lng) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    [contributor, email, spot, noise, content, lat, lng]
   );
 
   res.status(200).send({

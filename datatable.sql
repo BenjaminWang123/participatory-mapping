@@ -22,3 +22,6 @@ CREATE TABLE IF NOT EXISTS public."tblRecord"
 
 ALTER TABLE "tblRecord"
 ADD COLUMN email text;
+
+ALTER TABLE "tblRecord" ADD COLUMN spot text;
+ALTER TABLE "tblRecord" ADD COLUMN noise text;
